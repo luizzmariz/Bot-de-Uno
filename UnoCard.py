@@ -20,6 +20,5 @@ class UnoCard:
     def can_play_on(self, top_card):
         if self.color is None: # Wild card
             return True
-        if top_card.color is None: # Top card is a Wild card
-            return True
         return self.color == top_card.color or self.value == top_card.value
+

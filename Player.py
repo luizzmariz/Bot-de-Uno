@@ -10,6 +10,7 @@ class Player:
             self.hand.append(card)        
         return card
 
+
     def play_card(self, discard_pile):
         if not self.hand:
             return None
@@ -17,6 +18,11 @@ class Player:
         card = self.hand[0]
         
         self.hand.remove(card)
+
+        if(card.color is None):
+            color = self.chooseColor()
+            card.color = color
+
         discard_pile.append(card)
         return card
 
@@ -25,3 +31,6 @@ class Player:
     
     def has_won(self):
         return len(self.hand) == 0
+    
+    def chooseColor():
+        return 'Red'

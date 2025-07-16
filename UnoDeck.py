@@ -10,7 +10,7 @@ class UnoDeck:
         # Number cards (two of each number 1-9, one of 0)
         for color in UnoCard.colors:
             deck.append(UnoCard(color, '0'))
-            for number in UnoCard.numbers: # 1-9 and action cards
+            for number in UnoCard.numbers[:1]: # 1-9 and action cards
                 deck.append(UnoCard(color, number))
                 deck.append(UnoCard(color, number))
         
