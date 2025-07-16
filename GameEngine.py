@@ -47,7 +47,11 @@ class Uno:
         while(True):
             player = self.players[self.current_player_index]
             card_played = None
+            print("--------------------------------------")
             print(f"{player.name}'s turn.")
+            print(f"Current Discard Pile Card: {self.discard_pile[-1]}")
+            print(f"{player.name} Current hand: {player.hand}")
+
             
             if not player.has_valid_move(self.discard_pile):
                 print(f"{player.name} has no valid moves. Drawing a card.")
