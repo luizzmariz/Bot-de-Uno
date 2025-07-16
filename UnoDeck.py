@@ -21,7 +21,7 @@ class UnoDeck:
             self.deck.append(UnoCard(None, 'Wild'))
             self.deck.append(UnoCard(None, 'Wild Draw Four'))
         
-        print(self.deck)
+        # print(self.deck)
     
     def shuffled_deck(self):
         random.shuffle(self.deck)
