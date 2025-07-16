@@ -3,6 +3,8 @@ class UnoCard:
     colors = ['Red', 'Yellow', 'Green', 'Blue']
     numbers = [str(i) for i in range(10)] + ['Skip', 'Reverse', 'Draw Two']
     wild_cards = ['Wild', 'Wild Draw Four']
+    color = None
+    value = None
 
     def __init__(self, color=None, value=None):
         self.color = color

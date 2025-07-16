@@ -6,10 +6,9 @@ class Player:
     def draw_card(self, deck, num_cards=1):
         card = None
         for _ in range(num_cards):
-            card = deck.pop(0)
+            card = deck.draw_card()
             self.hand.append(card)        
         return card
-
 
     def play_card(self, discard_pile):
         if not self.hand:
@@ -17,13 +16,15 @@ class Player:
         
         card = self.hand[0]
         
-        self.hand.remove(card)
 
+        # In case the card is a Wild card, choose color 
         if(card.color is None):
             color = self.chooseColor()
             card.color = color
 
+        self.hand.remove(card)
         discard_pile.append(card)
+                
         return card
 
     def has_valid_move(self, discard_pile):
@@ -32,5 +33,19 @@ class Player:
     def has_won(self):
         return len(self.hand) == 0
     
-    def chooseColor():
-        return 'Red'
+    def chooseColor(self):
+        maxAmount = 0
+        colorChoosen = None
+        colors = {'Red': 0, 'Yellow': 0, 'Green': 0, 'Blue': 0}
+
+        for card in self.hand:
+           if(card.color is None):
+               continue
+           colors[card.color] +=1
+
+        for color in colors:
+            if colors[color] > maxAmount:
+                maxAmount = colors[color]
+                colorChoosen = color
+
+        return colorChoosen
