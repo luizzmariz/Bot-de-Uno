@@ -14,10 +14,22 @@ class Uno:
                 card = self.deck.draw_card()
                 if card:
                     player.hand.append(card)
+
+    def next_player(self):
+        self.current_player_index = (self.current_player_index + self.direction) % len(self.players)
+        return self.players[self.current_player_index]
     
-    def start_game(self):
+    def newDeckFromDiscardPile(self):
+        top_card = self.discard_pile.pop()
+        self.deck.deck += self.discard_pile
+        self.discard_pile = [top_card]
+        self.deck.shuffle()
+        #print("Deck has been replenished from the discard pile.")
+    
+    
+    def prepare_game(self):
         # Shuffle the deck
-        self.deck.shuffled_deck()
+        self.deck.shuffle()
         
         # Deal initial cards to players
         self.deal_cards()
@@ -32,17 +44,6 @@ class Uno:
                 self.deck.deck.append(top_card)
         print(f"Starting discard pile: {self.discard_pile[-1]}")
 
-    def next_player(self):
-        self.current_player_index = (self.current_player_index + self.direction) % len(self.players)
-        return self.players[self.current_player_index]
-    
-    def newDeckFromDiscardPile(self):
-        top_card = self.discard_pile.pop()
-        self.deck += self.discard_pile
-        self.discard_pile = [top_card]
-        self.deck.shuffled_deck()
-        print("Deck has been replenished from the discard pile.")
-    
     def game(self):
         while(True):
             player = self.players[self.current_player_index]
@@ -50,7 +51,7 @@ class Uno:
             print("--------------------------------------")
             print(f"{player.name}'s turn.")
             print(f"Current Discard Pile Card: {self.discard_pile[-1]}")
-            print(f"{player.name} Current hand: {player.hand}")
+            #print(f"{player.name} Current hand: {player.hand}")
 
             
             if not player.has_valid_move(self.discard_pile):
@@ -69,7 +70,7 @@ class Uno:
 
             if player.has_won():
                 print(f"{player.name} has won the game!")
-                break
+                return self.players.index(player)
 
             if card_played and card_played.value in UnoCard.numbers[10:]:
                 print(f"{player.name} played a action card: {card_played}.")
@@ -98,8 +99,16 @@ class Uno:
                     next_player = self.next_player()
                     next_player.draw_card(self.deck, 4)
                     print(f"{next_player.name} drew 4 cards due to Wild Draw Four.")
-                print(f"{player.name} choose the next color as {card_played.color}.")
+                #print(f"{player.name} choose the next color as {card_played.color}.")
 
             self.next_player()
+        
+    def start_game(self):
+
+        self.prepare_game()
+        
+        return self.game()
+
+
 
    

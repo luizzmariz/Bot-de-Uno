@@ -5,10 +5,13 @@ from UnoCard import UnoCard
 
 class UnoDeck:
     deck = []
+    backup_deck = []
+    game_seed = 0
 
     # --- Deck and Dealing ---
-    def __init__(self):
-        print("creating deck")
+    def __init__(self, game_seed):
+        self.game_seed = game_seed
+
         # Number cards (two of each number 1-9, one of 0)
         for color in UnoCard.colors:
             self.deck.append(UnoCard(color, '0'))
@@ -22,9 +25,12 @@ class UnoDeck:
             self.deck.append(UnoCard(None, 'Wild Draw Four'))
         
         # print(self.deck)
+        self.backup_deck = self.deck.copy()
     
-    def shuffled_deck(self):
+    def shuffle(self):
+        random.seed(self.game_seed)
         random.shuffle(self.deck)
+
         return self.deck
     
     def draw_card(self):
@@ -35,3 +41,6 @@ class UnoDeck:
     
     def hasCards(self, num_cards=1):
         return len(self.deck) >= num_cards
+
+    def reset_deck(self):
+        self.deck = self.backup_deck.copy()

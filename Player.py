@@ -1,8 +1,14 @@
+import random
+
+
 class Player:
-    def __init__(self, name, stategies):
+    def __init__(self, name, strategies, player_seed):
         self.name = name
         self.hand = []
-        self.stategies = stategies
+        self.strategies = strategies
+        self.player_seed = player_seed
+
+        random.seed(self.player_seed)
 
     def draw_card(self, deck, num_cards=1):
         card = None
@@ -15,22 +21,26 @@ class Player:
         if not self.hand:
             return None
         
+        card = None
+
         # Play card strategy
-        for strategy in self.stategies:
+        for strategy in self.strategies:
             match strategy:
                 case 'wild_card_strategy':
-                    result = self.wild_card_strategy()
+                    card = self.wild_card_strategy()
                 case 'change_color_strategy':
-                    result = self.change_color_strategy(discard_pile[-1])
+                    card = self.change_color_strategy(discard_pile[-1])
                 case 'same_color_strategy':
-                    result = self.same_color_strategy(discard_pile[-1])
+                    card = self.same_color_strategy(discard_pile[-1])
+                case 'random_strategy':
+                    card = self.random_strategy(discard_pile[-1])
             
             # If a strategy returns a card, play it
-            if result:
-                card = result
+            if card:
                 break
-        
-        # card = self.hand[0]
+
+        if card is None:
+            card = self.first_valid_strategy(discard_pile[-1])
         
 
         # In case the card is a Wild card, choose color 
@@ -94,3 +104,30 @@ class Player:
         
         return None
     
+    def first_valid_strategy(self, top_card):
+        print(self.name + " is trying the first valid strategy")
+
+        for card in self.hand:
+            if card.color is None or card.color == top_card.color or card.value == top_card.value:
+                return card
+
+        return None
+
+    def random_strategy(self, top_card):
+
+        random_strategies = ['wild_card_strategy', 'change_color_strategy', 'same_color_strategy']
+
+        random.shuffle(random_strategies)
+        
+        for strategy in random_strategies:
+            match strategy:
+                case 'wild_card_strategy':
+                    card = self.wild_card_strategy()
+                case 'change_color_strategy':
+                    card = self.change_color_strategy(top_card)
+                case 'same_color_strategy':
+                    card = self.same_color_strategy(top_card)
+            if card:
+                return card
+        
+        return None
