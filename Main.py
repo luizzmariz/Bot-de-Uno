@@ -4,28 +4,24 @@ from UnoEngine import Uno
 from Player import Player
 from UnoDeck import UnoDeck
 import os
-import csv # Importar o módulo csv para lidar com CSVs de forma mais robusta
+import csv 
 
 class Main:
     def __init__(self, num_games, game_seed, player_seed):
-        num_players_initialized = 10 # Seus exemplos de jogadores vão até 10
+        num_players_initialized = 10 
         players = []
-        # stats precisa ser maior ou igual ao num_players_initialized
         stats = [0] * num_players_initialized 
         strategy = ['wild_card_strategy', 'change_color_strategy',
                     'same_color_strategy', 'random_strategy']
 
         print("--- Initializing Game Simulation--")
 
-        # Criação dos Jogadores (mantendo a lógica do seu script)
-        # Nomes dos jogadores para o cabeçalho e fácil referência
         player_names_for_report = []
 
         for i in range(num_players_initialized):
             player_name = f"Player {i+1}"
             player_names_for_report.append(player_name)
             
-            # Ajuste das estratégias conforme o seu código
             if i < 4:
                 players.insert(i, Player(player_name, [strategy[i]], player_seed))
             elif i == 4: # Player 5
@@ -45,13 +41,11 @@ class Main:
         deck = UnoDeck(game_seed)
 
         for i in range(num_games):
-            # Assumimos que todos os 'players' na lista participarão desta simulação
-            # Se a ideia é ter subconjuntos, a lista 'players' aqui deveria ser filtrada
-            # antes de passar para Uno(players_ativos, deck) para cada jogo.
+
             uno = Uno(players, deck) 
             print(f"\n--- Starting Game {i + 1} ---")
-            winner_index = uno.start_game() # uno.start_game deve retornar o índice do vencedor na lista 'players'
-            if winner_index is not None: # Apenas se houver um vencedor válido
+            winner_index = uno.start_game()
+            if winner_index is not None:
                 stats[winner_index] += 1
             deck.reset_deck()
 
@@ -66,31 +60,16 @@ class Main:
         for player in players:
             print(f"Player {player.name}: {player.strategies}")
 
-        # --- NOVA PARTE: Geração do Relatório CSV no novo formato ---
-        self.generate_report(num_games, game_seed, player_seed, players, stats, player_names_for_report)
+        self.generate_report(num_games, game_seed, players, stats, player_names_for_report)
 
-    def generate_report(self, num_games, game_seed, player_seed, players, stats, all_player_names):
+    def generate_report(self, num_games, global_seed, players, stats, all_player_names):
         report_filename = "uno_simulation_summary.csv"
         
-        # Define o cabeçalho
-        header = ["Game_Seed", "Player_Seed", "Total_Games"] + all_player_names
+        header = ["Global_Seed", "Total_Games"] + all_player_names
         
-        # Prepara a linha de dados para esta simulação
-        data_row = [str(game_seed), str(player_seed), str(num_games)]
+        data_row = [str(global_seed), str(num_games)]
         
-        # Adiciona as vitórias de cada jogador.
-        # Se a intenção do 'X' é para jogadores que não *participaram* da simulação,
-        # essa lógica precisaria saber quem participou.
-        # Por enquanto, se stats[i] == 0, ele será 'X'.
-        # Isso **assume** que 0 vitórias significa "não participou" para esta simulação,
-        # o que pode não ser sempre o caso (pode ter participado e perdido todas).
-        # A forma mais robusta seria ter uma lista de 'active_players_in_this_sim'
-        # que seria usada para preencher com X quem não está nela.
-        
-        # Para o caso atual, onde todos os 10 players são criados e passados para o UnoEngine,
-        # usaremos os stats brutos. Se stats[i] é 0, colocamos 'X'.
-        
-        current_players_in_simulation_names = {p.name for p in players} # Nomes dos jogadores que foram instanciados para esta simulação
+        current_players_in_simulation_names = {p.name for p in players}
 
         for player_name_in_header in all_player_names:
             found_player = False
@@ -106,13 +85,12 @@ class Main:
                 data_row.append("X") 
 
 
-        # Verifica se o arquivo já existe para decidir se escreve o cabeçalho
         file_exists = os.path.exists(report_filename)
         
-        with open(report_filename, 'a', newline='') as f: # 'a' para append, newline='' para evitar linhas em branco extras
+        with open(report_filename, 'a', newline='') as f:
             writer = csv.writer(f)
             
-            if not file_exists or os.stat(report_filename).st_size == 0: # Escreve cabeçalho se o arquivo não existia ou estava vazio
+            if not file_exists or os.stat(report_filename).st_size == 0:
                 writer.writerow(header)
             
             writer.writerow(data_row)
