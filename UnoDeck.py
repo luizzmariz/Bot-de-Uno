@@ -1,16 +1,11 @@
-
-import random
-
 from UnoCard import UnoCard
 
 class UnoDeck:
-    deck = []
-    backup_deck = []
-    game_seed = 0
-
     # --- Deck and Dealing ---
-    def __init__(self, game_seed):
-        self.game_seed = game_seed
+    def __init__(self, deck_rng_instance):
+        self.deck = []
+        self.backup_deck = []
+        self.deck_rng_instance = deck_rng_instance
 
         # Number cards (two of each number 1-9, one of 0)
         for color in UnoCard.colors:
@@ -28,8 +23,7 @@ class UnoDeck:
         self.backup_deck = self.deck.copy()
     
     def shuffle(self):
-        random.seed(self.game_seed)
-        random.shuffle(self.deck)
+        self.deck_rng_instance.shuffle(self.deck)
 
         return self.deck
     

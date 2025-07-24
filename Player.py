@@ -1,14 +1,9 @@
-import random
-
-
 class Player:
-    def __init__(self, name, strategies, player_seed):
+    def __init__(self, name, strategies, player_rng_instance):
         self.name = name
         self.hand = []
         self.strategies = strategies
-        self.player_seed = player_seed
-
-        random.seed(self.player_seed)
+        self.player_rng_instance = player_rng_instance
 
     def draw_card(self, deck, num_cards=1):
         card = None
@@ -77,7 +72,7 @@ class Player:
         return colorChoosen
     
     def wild_card_strategy(self):
-        print(self.name + " is trying wild card strategy")
+        #print(self.name + " is trying wild card strategy")
         if any(card.color is None for card in self.hand):
             # If there is a wild card, play it
             for card in self.hand:
@@ -87,7 +82,7 @@ class Player:
 
 
     def change_color_strategy(self, top_card):
-        print(self.name + " is trying change color strategy")
+        #print(self.name + " is trying change color strategy")
         for card in self.hand:
             # Same value, different color
             if card.color is not None and card.color != top_card.color and card.value == top_card.value:
@@ -96,7 +91,7 @@ class Player:
         return None
 
     def same_color_strategy(self, top_card):
-        print(self.name + " is trying same color strategy")
+        #print(self.name + " is trying same color strategy")
         for card in self.hand:
             # Same color
             if card.color == top_card.color:
@@ -105,7 +100,7 @@ class Player:
         return None
     
     def first_valid_strategy(self, top_card):
-        print(self.name + " is trying the first valid strategy")
+        #print(self.name + " is trying the first valid strategy")
 
         for card in self.hand:
             if card.color is None or card.color == top_card.color or card.value == top_card.value:
@@ -117,7 +112,7 @@ class Player:
 
         random_strategies = ['wild_card_strategy', 'change_color_strategy', 'same_color_strategy']
 
-        random.shuffle(random_strategies)
+        self.player_rng_instance.shuffle(random_strategies)
         
         for strategy in random_strategies:
             match strategy:
