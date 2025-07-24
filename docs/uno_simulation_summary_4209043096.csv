@@ -1,0 +1,81 @@
+Uno Bot Simulation Results
+
+Experiment: Basic group: WC vs R
+Total_Games: 10000
+Bot 1,Bot 2
+5117,4883
+
+Experiment: Basic group: SC vs R
+Total_Games: 10000
+Bot 1,Bot 2
+4303,5697
+
+Experiment: Basic group: CC vs R
+Total_Games: 10000
+Bot 1,Bot 2
+4732,5268
+
+Experiment: Basic group: WC vs SC
+Total_Games: 10000
+Bot 1,Bot 2
+5701,4299
+
+Experiment: Basic group: WC vs CC
+Total_Games: 10000
+Bot 1,Bot 2
+5129,4871
+
+Experiment: Basic group: SC vs CC
+Total_Games: 10000
+Bot 1,Bot 2
+4349,5651
+
+Experiment: Small group: All random
+Total_Games: 10000
+Bot 1,Bot 2,Bot 3,Bot 4
+2435,2448,2687,2430
+
+Experiment: Small group: One from each base
+Total_Games: 10000
+Bot 1,Bot 2,Bot 3,Bot 4
+2033,2603,2736,2628
+
+Experiment: Small group: Based vs Combined - WC and SC
+Total_Games: 10000
+Bot 1,Bot 2,Bot 3,Bot 4
+2605,2826,2406,2163
+
+Experiment: Small group: Based vs Combined - WC and CC
+Total_Games: 10000
+Bot 1,Bot 2,Bot 3,Bot 4
+2516,2409,2736,2339
+
+Experiment: Small group: Based vs Combined - CC and SC
+Total_Games: 10000
+Bot 1,Bot 2,Bot 3,Bot 4
+2621,2634,2426,2319
+
+Experiment: Big group: All strategies
+Total_Games: 10000
+Bot 1,Bot 2,Bot 3,Bot 4,Bot 5,Bot 6,Bot 7,Bot 8,Bot 9,Bot 10
+1259,779,1066,1044,1191,1315,940,843,865,698
+
+Experiment: Big group: Dominant Strategy WC
+Total_Games: 10000
+Bot 1,Bot 2,Bot 3,Bot 4,Bot 5,Bot 6
+1943,1790,1800,1497,1485,1485
+
+Experiment: Big group: Dominant Strategy SC
+Total_Games: 10000
+Bot 1,Bot 2,Bot 3,Bot 4,Bot 5,Bot 6
+2033,1907,1524,1904,1438,1194
+
+Experiment: Big group: Dominant Strategy CC
+Total_Games: 10000
+Bot 1,Bot 2,Bot 3,Bot 4,Bot 5,Bot 6
+1557,1737,1711,1937,1658,1400
+
+Experiment: Big group: Duplicants 
+Total_Games: 10000
+Bot 1,Bot 2,Bot 3,Bot 4,Bot 5,Bot 6,Bot 7,Bot 8
+1365,1235,1166,1004,1363,1144,1381,1342

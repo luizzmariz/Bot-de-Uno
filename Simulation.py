@@ -139,12 +139,11 @@ def run_simulation(experiment_name, num_games, player_strategies, global_seed=No
     generate_report(experiment_name, num_games, wins_by_player, players, global_seed)
 
 def generate_report(experiment_name, num_games, wins_by_player, players, global_seed):
-        report_filename = "uno_simulation_summary.csv"
+        report_filename = f"uno_simulation_summary_{global_seed}.csv"
 
         header = [
             [],
             [f"Experiment: {experiment_name}"], 
-            [f"Global seed: {global_seed}"],
             [f"Total_Games: {num_games}"],
         ]
 
@@ -171,9 +170,25 @@ def generate_report(experiment_name, num_games, wins_by_player, players, global_
         #print(f"\n--- Simulation Report Saved to {report_filename} ---")
 
 if __name__ == '__main__':
-    GLOBAL_SEED = 10001
+    GLOBAL_SEED = random.randint(0, 2**32-1)
 
     for exp in EXPERIMENTS_BASIC_GROUPS:
+        run_simulation(
+            exp["name"],
+            exp["num_games"],
+            exp["player_strategies"],
+            GLOBAL_SEED
+        )
+    
+    for exp in EXPERIMENTS_SMALL_GROUPS:
+        run_simulation(
+            exp["name"],
+            exp["num_games"],
+            exp["player_strategies"],
+            GLOBAL_SEED
+        )
+    
+    for exp in EXPERIMENTS_BIG_GROUPS:
         run_simulation(
             exp["name"],
             exp["num_games"],
